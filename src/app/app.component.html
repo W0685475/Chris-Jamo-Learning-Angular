@@ -1,5 +1,12 @@
-<h1>
-  Name: {{firstName}}
-</h1>
-<h2>Age: {{age}}</h2>
-<p>"Welcome To My Page!"</p>
+<!-- Main container for the movie list -->
+<div class="container">
+  <h2>Movie List</h2>
+
+  <!-- Loop through each movie using *ngFor -->
+  <div *ngFor="let movie of movies" class="movie-card">
+    <!-- Display movie title and release year -->
+    <h3>{{ movie.title }} ({{ movie.releaseYear }})</h3>
+    <p>Director: {{ movie.director }}</p>
+    <p>Genre: {{ movie.genre }}</p>
+  </div>
+</div>
