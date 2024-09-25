@@ -2,11 +2,12 @@ import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import {JsonPipe, NgForOf} from "@angular/common";
 import {Movie} from "./Shared/Modules/movie";
+import {MovieListComponent} from "./movie-list/movie-list.component";
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, JsonPipe, NgForOf],
+  imports: [RouterOutlet, JsonPipe, NgForOf, MovieListComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
