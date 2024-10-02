@@ -1,8 +1,7 @@
 import {Movie} from "./Modules/movie";
 
-export class movies {
+export const movies: Movie[] =  [
   // Create an array of movies using the Movie interface
-  movies: Movie[] = [
     { id: 1, title: 'Black Panther', director: 'Ryan Coogler', releaseYear: 2018, genre: 'Action/Sci-Fi', rating: 7.3, image: 'Assets/bp.webp'},
     { id: 2, title: 'No Good Deed', director: 'Sam Miller', releaseYear: 2014, genre: 'Thriller/Action', rating: 5.6, image: 'Assets/ngd.jpeg'},
     { id: 3, title: 'Dumb & Dumber', director: 'Peter Farrelly', releaseYear: 1994, genre: 'Comedy', rating: 7.3, image: '../Assets/dd.jpg'},
@@ -11,4 +10,4 @@ export class movies {
     { id: 6, title: 'Dirty Dancing', director: 'Emile Ardolino', releaseYear: 1987, genre: 'Romance/Dance', rating: 7.1, image: 'Assets/ddance.jpeg'}
   ];
 
-}
+
