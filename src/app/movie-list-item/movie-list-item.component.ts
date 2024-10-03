@@ -8,7 +8,7 @@ import {MovieService} from "../Services/movie.service";
 @Component({
   selector: 'app-movie-list-item',
   standalone: true,
-  imports: [MovieListItemComponent, NgForOf, NgStyle], // Add NgStyle here
+  imports: [], // Add NgStyle here
   templateUrl: './movie-list-item.component.html',
   styleUrl: './movie-list-item.component.css'
 })
