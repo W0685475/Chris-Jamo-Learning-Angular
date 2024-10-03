@@ -3,7 +3,7 @@ import {Movie} from "../Shared/Modules/movie";
 import {MovieListItemComponent} from "../movie-list-item/movie-list-item.component";
 import {NgClass, NgForOf, NgOptimizedImage, NgStyle} from "@angular/common";
 import {MovieService} from "../Services/movie.service";
-import {movies} from "../Shared/movies-mockcontent";
+import {movies} from "../../data/movies-mockcontent";
 
 @Component({
   selector: 'app-movie-list',

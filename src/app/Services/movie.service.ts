@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import {Movie} from "../Shared/Modules/movie";
 import {Observable, of} from "rxjs";
-import {movies} from "../Shared/movies-mockcontent";
+import {movies} from "../../data/movies-mockcontent";
 
 @Injectable({
   providedIn: 'root'

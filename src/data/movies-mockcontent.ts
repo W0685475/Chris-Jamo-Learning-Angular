@@ -1,4 +1,4 @@
-import {Movie} from "./Modules/movie";
+import {Movie} from "../app/Shared/Modules/movie";
 
 export const movies: Movie[] =  [
   // Create an array of movies using the Movie interface
