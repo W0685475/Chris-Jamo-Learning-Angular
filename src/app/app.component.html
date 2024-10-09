@@ -1,12 +1,25 @@
+<!-- Future Nav Bar-->
+<div class="nav-bar">
+  <nav>
+    <a routerLink="/movies" routerLinkActive="active">Student List</a>
+    <a routerLink="/modify-movie" routerLinkActive="active">Modify Movie</a>
+  </nav>
+</div>
+
 <!-- Main container for the movie list -->
 <div class="app-container">
+  <h1>{{ title }}</h1>
   <!--put you li tag and get data from the service,
     maybe use an @input decorator in the li, you would likely need to use event binding here as well
     could also use an emitter -->
     <!-- Displaying content from ContentService -->
 
-  <app-movie-list-item [movieListItem]="movie"></app-movie-list-item>
+  <!--router outlet to display routed components -->
+  <router-outlet></router-outlet>
+  </div>
+
 <!--  <app-movie-list-item [movieListItem]="movie"></app-movie-list-item>-->
-  <h1>{{ title }}</h1>
-  <app-movie-list></app-movie-list>
-</div>
+<!--&lt;!&ndash;  <app-movie-list-item [movieListItem]="movie"></app-movie-list-item>&ndash;&gt;-->
+<!--  <h1>{{ title }}</h1>-->
+<!--  <app-movie-list></app-movie-list>-->
+<!--</div>-->
