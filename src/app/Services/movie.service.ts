@@ -34,7 +34,6 @@ export class MovieService {
 
   }
   deleteMovie(movieId: number): Observable<Movie[]> {
-    this.movieList.splice(1,2)
     this.movieList = this.movieList.filter(movie => movie.id !== movieId);
     return of(this.movieList);
   }

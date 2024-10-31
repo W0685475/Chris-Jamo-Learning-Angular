@@ -37,15 +37,20 @@ export class MovieListComponent implements OnInit {
   }
 
 
-  protected readonly movies = movies;
 
   delete(id: number): void {
-    this.movieList.splice()
-    this.movieList = this.movieList.filter(movie => movie.id !== id);
-    console.log(id);
+    this.movieService.deleteMovie(id).subscribe({
+      next: (updatedMovieList: Movie[]) => {
+        this.movieList = updatedMovieList;
+        console.log(`Movie with id ${id} deleted successfully`);
+      },
+      error: (err: any) => console.error("Error deleting movie", err)
+    });
   }
 
   navigateToMovieList() {
     this.router.navigate(['modify-movie']);
   }
+
+  protected readonly movies = movies;
 }

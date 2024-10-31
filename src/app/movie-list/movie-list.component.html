@@ -1,13 +1,6 @@
-<!--<app-movie-list-item [movieListItem]="movies[0]"></app-movie-list-item>-->
-<!--<app-movie-list-item [movieListItem]="movies[1]"></app-movie-list-item>-->
-<!--<app-movie-list-item [movieListItem]="movies[2]"></app-movie-list-item>-->
-<!--<app-movie-list-item [movieListItem]="movies[3]"></app-movie-list-item>-->
-
-<div *ngFor="let movie of movies">
+<div *ngFor="let movie of movieList">
   <p>{{movie.id}}</p>
   <p>{{movie.title}}</p>
   <button type="button" (click)="delete(movie.id)">Delete</button>
   <button type="button" (click)="navigateToMovieList()">Back to List</button>
 </div>
-
-
