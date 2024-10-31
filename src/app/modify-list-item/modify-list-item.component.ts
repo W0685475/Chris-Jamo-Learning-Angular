@@ -29,10 +29,10 @@ export class ModifyListItemComponent implements OnInit {
   ) {
     this.movieForm = this.fb.group({
       id: ['', Validators.required], // ID is required.
-      firstName: ['', Validators.required], // First name is required.
-      lastName: ['', Validators.required],
-      department: [''],
-      isAdmin: [false]
+      movieName: ['', Validators.required], // First name is required.
+      directorName: ['', Validators.required],
+      filmCompany: [''],
+      goodFilm: [false]
     });
   }
 
