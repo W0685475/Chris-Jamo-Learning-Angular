@@ -4,6 +4,7 @@ import {MovieListItemComponent} from "../movie-list-item/movie-list-item.compone
 import {NgForOf, NgOptimizedImage, NgStyle} from "@angular/common";
 import {MovieService} from "../Services/movie.service";
 import {movies} from "../../data/movies-mockcontent";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-movie-list',
@@ -20,7 +21,7 @@ export class MovieListComponent implements OnInit {
   // Create an array of movies using the Movie interface
 
   movieList : Movie[] = [];
-  constructor(private movieService: MovieService) {
+  constructor(private movieService: MovieService, private router :Router) {
   }
 
   ngOnInit() : void {
@@ -37,4 +38,14 @@ export class MovieListComponent implements OnInit {
 
 
   protected readonly movies = movies;
+
+  delete(id: number): void {
+    this.movieList.splice()
+    this.movieList = this.movieList.filter(movie => movie.id !== id);
+    console.log(id);
+  }
+
+  navigateToMovieList() {
+    this.router.navigate(['modify-movie']);
+  }
 }

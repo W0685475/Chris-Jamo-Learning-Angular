@@ -1,12 +1,79 @@
-import { Component } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import {FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators} from "@angular/forms";
+import {ActivatedRoute, Router} from "@angular/router";
+import {MovieService} from "../Services/movie.service";
+import {Movie} from "../Shared/Modules/movie";
+import {NgIf} from "@angular/common";
+import {catchError, map, of, switchMap} from "rxjs";
 
 @Component({
   selector: 'app-modify-list-item',
   standalone: true,
-  imports: [],
+  imports: [
+    FormsModule,
+    NgIf,
+    ReactiveFormsModule
+  ],
   templateUrl: './modify-list-item.component.html',
   styleUrl: './modify-list-item.component.css'
 })
-export class ModifyListItemComponent {
+export class ModifyListItemComponent implements OnInit {
+  movieForm: FormGroup;
+  movie: Movie | undefined;
 
+  constructor(
+    private fb: FormBuilder,
+    private route: ActivatedRoute,
+    private movieService: MovieService,
+    private router: Router
+  ) {
+    this.movieForm = this.fb.group({
+      id: ['', Validators.required], // ID is required.
+      firstName: ['', Validators.required], // First name is required.
+      lastName: ['', Validators.required],
+      department: [''],
+      isAdmin: [false]
+    });
+  }
+
+  ngOnInit(): void {
+    const id = this.route.snapshot.paramMap.get('id');
+    if (id) {
+      this.movieService.getMovieById(+id).subscribe(movie => {
+        if(movie) {
+          this.movie = movie;
+
+          this.movieForm.patchValue(movie);
+        }
+      });
+    }
+  }
+
+  onSubmit(): void {
+    const movie: Movie = this.movieForm.value;
+
+    // Check if we're updating an existing student
+    if (movie.id) {
+      this.movieService.updateMovie(movie);
+    } else {
+      // For adding a new student, generate a new ID
+      const newId = this.movieService.generateNewId(); // This method will create a new ID
+      movie.id = newId;
+      this.movieService.addMovie(movie);
+    }
+
+    this.router.navigate(['/movies']);
+  }
+
+  onDelete(): void {
+    const id = this.movieForm.get('id')?.value;
+    if (id) {
+      this.movieService.deleteMovie(id);
+      this.router.navigate(['/movies']);
+    }
+  }
+
+  navigateToMovieList(): void {
+    this.router.navigate(['movies']);
+  }
 }

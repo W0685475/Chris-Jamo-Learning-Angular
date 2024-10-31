@@ -59,6 +59,8 @@ export class MovieListItemComponent implements OnInit {
       this.router.navigate(['/movies', this.movieList[this.currentIndex].id]);
     }
   }
+
+
 }
 
 
