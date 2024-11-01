@@ -1,10 +1,10 @@
-import {Component, OnInit} from '@angular/core';
-import {FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators} from "@angular/forms";
-import {ActivatedRoute, Router} from "@angular/router";
-import {MovieService} from "../Services/movie.service";
-import {Movie} from "../Shared/Modules/movie";
-import {NgIf} from "@angular/common";
-import {catchError, map, of, switchMap} from "rxjs";
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from "@angular/forms";
+import { ActivatedRoute, Router } from "@angular/router";
+import { MovieService } from "../Services/movie.service";
+import { Movie } from "../Shared/Modules/movie";
+import { NgIf } from "@angular/common";
+import { catchError, of } from "rxjs";
 
 @Component({
   selector: 'app-modify-list-item',
@@ -15,7 +15,7 @@ import {catchError, map, of, switchMap} from "rxjs";
     ReactiveFormsModule
   ],
   templateUrl: './modify-list-item.component.html',
-  styleUrl: './modify-list-item.component.css'
+  styleUrls: ['./modify-list-item.component.css']
 })
 export class ModifyListItemComponent implements OnInit {
   movieForm: FormGroup;
@@ -28,8 +28,8 @@ export class ModifyListItemComponent implements OnInit {
     private router: Router
   ) {
     this.movieForm = this.fb.group({
-      id: ['', Validators.required], // ID is required.
-      movieName: ['', Validators.required], // First name is required.
+      id: ['', Validators.required],
+      movieName: ['', Validators.required],
       directorName: ['', Validators.required],
       filmCompany: [''],
       goodFilm: [false]
@@ -39,10 +39,14 @@ export class ModifyListItemComponent implements OnInit {
   ngOnInit(): void {
     const id = this.route.snapshot.paramMap.get('id');
     if (id) {
-      this.movieService.getMovieById(+id).subscribe(movie => {
-        if(movie) {
+      this.movieService.getMovieById(+id).pipe(
+        catchError(error => {
+          console.error('Error fetching movie', error);
+          return of(undefined);
+        })
+      ).subscribe(movie => {
+        if (movie) {
           this.movie = movie;
-
           this.movieForm.patchValue(movie);
         }
       });
@@ -52,28 +56,49 @@ export class ModifyListItemComponent implements OnInit {
   onSubmit(): void {
     const movie: Movie = this.movieForm.value;
 
-    // Check if we're updating an existing student
+    // Check if we're updating an existing movie
     if (movie.id) {
-      this.movieService.updateMovie(movie);
+      this.movieService.updateMovie(movie).pipe(
+        catchError(error => {
+          console.error('Error updating movie', error);
+          return of(undefined); // Return an observable of undefined in case of error
+        })
+      ).subscribe(() => {
+        console.log('Movie updated successfully');
+        this.movieForm.reset(); // Reset the form after successful update
+        this.router.navigate(['/movies']); // Navigate back to movie list
+      });
     } else {
-      // For adding a new student, generate a new ID
-      const newId = this.movieService.generateNewId(); // This method will create a new ID
-      movie.id = newId;
-      this.movieService.addMovie(movie);
+      // Generate a new ID for the new movie
+      movie.id = this.movieService.generateNewId(); // Generate a new ID
+      this.movieService.addMovie(movie).pipe(
+        catchError(error => {
+          console.error('Error adding new movie', error);
+          return of(undefined); // Return an observable of undefined in case of error
+        })
+      ).subscribe(() => {
+        console.log('Movie added successfully');
+        this.movieForm.reset(); // Reset the form after successful addition
+        this.router.navigate(['/movies']); // Navigate back to movie list
+      });
     }
-
-    this.router.navigate(['/movies']);
   }
 
   onDelete(): void {
     const id = this.movieForm.get('id')?.value;
     if (id) {
-      this.movieService.deleteMovie(id);
-      this.router.navigate(['/movies']);
+      this.movieService.deleteMovie(id).pipe(
+        catchError(error => {
+          console.error('Error deleting movie', error);
+          return of(undefined);
+        })
+      ).subscribe(() => {
+        this.router.navigate(['/movies']);
+      });
     }
   }
 
   navigateToMovieList(): void {
-    this.router.navigate(['movies']);
+    this.router.navigate(['/movies']);
   }
 }

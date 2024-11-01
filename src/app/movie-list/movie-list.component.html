@@ -4,10 +4,17 @@
 <!--<app-movie-list-item [movieListItem]="movies[3]"></app-movie-list-item>-->
 
 <div *ngFor="let movie of movieList">
-  <p>{{movie.id}}</p>
-  <p>{{movie.title}}</p>
-  <button type="button" (click)="delete(movie.id)">Delete</button>
-  <button type="button" (click)="navigateToMovieList()">Back to List</button>
+  <h2>{{movie.title}} {{movie.releaseYear}})</h2>
+  <p>{{movie.director}} - {{movie.genre}} - Rating: {{movie.rating}}</p>
+  <img [src]="movie.image" alt="{{movie.title}} image" width="100" height="150">
+
+  <button (click)="delete(movie.id)">Delete</button>
+  <button (click)="navigateToMovieList()">Edit Movie</button>
 </div>
+
+<!--  <p>Id: {{movie.id}}</p>-->
+<!--  <p>Title: {{movie.title}}</p>-->
+<!--  <p>Rating: {{movie.director}}</p>-->
+
 
 
