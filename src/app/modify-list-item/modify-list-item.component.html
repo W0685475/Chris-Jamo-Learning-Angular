@@ -28,8 +28,12 @@
   <div class="form-group">
     <label for="goodFilm">Good Film</label>
     <input type="checkbox" id="goodFilm" formControlName="goodFilm" />
+    <span>Yes</span>
   </div>
 
   <!-- Submit Button (Add or Update) -->
-  <button type="submit">Submit</button>
+  <div class="button-group">
+    <button type="submit">Submit</button>
+<button type="button" (click)="navigateToMovieList()">Back To List</button>
+  </div>
 </form>

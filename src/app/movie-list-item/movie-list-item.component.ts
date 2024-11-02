@@ -10,12 +10,28 @@ import {ActivatedRoute, Router} from "@angular/router";
 @Component({
   selector: 'app-movie-list-item',
   standalone: true,
+  // imports: [
+  //   NgOptimizedImage
+  // ], // Add NgStyle here
+  templateUrl: './movie-list-item.component.html',
   imports: [
     NgOptimizedImage
-  ], // Add NgStyle here
-  templateUrl: './movie-list-item.component.html',
+  ],
   styleUrl: './movie-list-item.component.css'
 })
+
+// export class MovieListItemComponent {
+//   @Input() movie!: Movie;
+//   @Input() editMovie!: (id: number) => void;
+//   @Input() deleteMovie!: (id: number) => void;
+//
+//   onEdit() {
+//     this.editMovie(this.movie.id);
+//   }
+//
+//   onDelete() {
+//     this.deleteMovie(this.movie.id);
+
 export class MovieListItemComponent implements OnInit {
   movie: Movie | undefined;
   movieList: Movie[] = [];

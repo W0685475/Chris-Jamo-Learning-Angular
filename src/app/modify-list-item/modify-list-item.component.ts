@@ -10,8 +10,8 @@ import { catchError, of } from "rxjs";
   selector: 'app-modify-list-item',
   standalone: true,
   imports: [
-    FormsModule,
-    NgIf,
+    // FormsModule,
+    // NgIf,
     ReactiveFormsModule
   ],
   templateUrl: './modify-list-item.component.html',
@@ -20,6 +20,7 @@ import { catchError, of } from "rxjs";
 export class ModifyListItemComponent implements OnInit {
   movieForm: FormGroup;
   movie: Movie | undefined;
+  movies: Movie[] = [];
 
   constructor(
     private fb: FormBuilder,
@@ -28,23 +29,23 @@ export class ModifyListItemComponent implements OnInit {
     private router: Router
   ) {
     this.movieForm = this.fb.group({
-      id: ['', Validators.required],
-      movieName: ['', Validators.required],
-      directorName: ['', Validators.required],
+      id: [''],
+      movieName: [0],
+      directorName: [0],
       filmCompany: [''],
-      goodFilm: [false]
+      goodFilm: [false],
+        // ['', Validators.required],
     });
   }
 
   ngOnInit(): void {
+    this.movieService.getMovies().subscribe(movies => {
+      this.movies = movies;
+    });
+
     const id = this.route.snapshot.paramMap.get('id');
     if (id) {
-      this.movieService.getMovieById(+id).pipe(
-        catchError(error => {
-          console.error('Error fetching movie', error);
-          return of(undefined);
-        })
-      ).subscribe(movie => {
+      this.movieService.getMovieById(+id).subscribe(movie => {
         if (movie) {
           this.movie = movie;
           this.movieForm.patchValue(movie);
@@ -52,51 +53,76 @@ export class ModifyListItemComponent implements OnInit {
       });
     }
   }
+  //       catchError(error => {
+  //         console.error('Error fetching movie', error);
+  //         return of(undefined);
+  //       })
+  //     ).subscribe(movie => {
+  //       if (movie) {
+  //         this.movie = movie;
+  //         this.movieForm.patchValue(movie);
+  //       }
+  //     });
+  //   }
+  // }
 
   onSubmit(): void {
-    const movie: Movie = this.movieForm.value;
+    const updatedMovie = this.movieForm.value;
 
     // Check if we're updating an existing movie
-    if (movie.id) {
-      this.movieService.updateMovie(movie).pipe(
-        catchError(error => {
-          console.error('Error updating movie', error);
-          return of(undefined); // Return an observable of undefined in case of error
-        })
-      ).subscribe(() => {
-        console.log('Movie updated successfully');
-        this.movieForm.reset(); // Reset the form after successful update
-        this.router.navigate(['/movies']); // Navigate back to movie list
-      });
+    if (updatedMovie.id) {
+      this.movieService.updateMovie(updatedMovie);
     } else {
-      // Generate a new ID for the new movie
-      movie.id = this.movieService.generateNewId(); // Generate a new ID
-      this.movieService.addMovie(movie).pipe(
-        catchError(error => {
-          console.error('Error adding new movie', error);
-          return of(undefined); // Return an observable of undefined in case of error
-        })
-      ).subscribe(() => {
-        console.log('Movie added successfully');
-        this.movieForm.reset(); // Reset the form after successful addition
-        this.router.navigate(['/movies']); // Navigate back to movie list
-      });
+      this.movieService.addMovie(updatedMovie);
     }
+    this.router.navigate(['movies']);
   }
 
+  //       catchError(error => {
+  //         console.error('Error updating movie', error);
+  //         return of(undefined); // Return an observable of undefined in case of error
+  //       })
+  //     ).subscribe(() => {
+  //       console.log('Movie updated successfully');
+  //       this.movieForm.reset(); // Reset the form after successful update
+  //       this.router.navigate(['/movies']); // Navigate back to movie list
+  //     });
+  //   } else {
+  //     // Generate a new ID for the new movie
+  //     movie.id = this.movieService.generateNewId(); // Generate a new ID
+  //     this.movieService.addMovie(movie).pipe(
+  //       catchError(error => {
+  //         console.error('Error adding new movie', error);
+  //         return of(undefined); // Return an observable of undefined in case of error
+  //       })
+  //     ).subscribe(() => {
+  //       console.log('Movie added successfully');
+  //       this.movieForm.reset(); // Reset the form after successful addition
+  //       this.router.navigate(['/movies']); // Navigate back to movie list
+  //     });
+  //   }
+  // }
+
   onDelete(): void {
-    const id = this.movieForm.get('id')?.value;
-    if (id) {
-      this.movieService.deleteMovie(id).pipe(
-        catchError(error => {
-          console.error('Error deleting movie', error);
-          return of(undefined);
-        })
-      ).subscribe(() => {
+    if (this.movie) {
+      this.movieService.deleteMovie(this.movie.id).subscribe(() => {
         this.router.navigate(['/movies']);
       });
     }
-  }
+    }
+
+  //   const id = this.movieForm.get('id')?.value;
+  //   if (id) {
+  //     this.movieService.deleteMovie(id).pipe(
+  //       catchError(error => {
+  //         console.error('Error deleting movie', error);
+  //         return of(undefined);
+  //       })
+  //     ).subscribe(() => {
+  //       this.router.navigate(['/movies']);
+  //     });
+  //   }
+  // }
 
   navigateToMovieList(): void {
     this.router.navigate(['/movies']);
