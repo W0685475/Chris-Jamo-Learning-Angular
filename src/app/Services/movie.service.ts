@@ -25,12 +25,14 @@ export class MovieService {
     this.movieList.push(newMovie)
     return of(this.movieList);
   }
-  updateMovie(updatedMovie: Movie): Observable<Movie[]> {
+  updateMovie(updatedMovie: Movie): Observable<Movie | undefined> {
+
     const index = this.movieList.findIndex(movie => movie.id=== updatedMovie.id);
-    if (index !== -1) {
+    if (index > -1) {
       this.movieList[index] = updatedMovie;
+      return of(updatedMovie)
     }
-    return of(this.movieList);
+    return of(undefined);
 
   }
   deleteMovie(movieId: number): Observable<Movie[]> {

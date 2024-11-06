@@ -58,6 +58,8 @@ export class MovieListItemComponent implements OnInit {
       });
     });
   }
+
+
   goBack(): void {
     this.router.navigate(['/movies']);
   }
