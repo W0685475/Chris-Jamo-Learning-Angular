@@ -20,18 +20,6 @@ import {ActivatedRoute, Router} from "@angular/router";
   styleUrl: './movie-list-item.component.css'
 })
 
-// export class MovieListItemComponent {
-//   @Input() movie!: Movie;
-//   @Input() editMovie!: (id: number) => void;
-//   @Input() deleteMovie!: (id: number) => void;
-//
-//   onEdit() {
-//     this.editMovie(this.movie.id);
-//   }
-//
-//   onDelete() {
-//     this.deleteMovie(this.movie.id);
-
 export class MovieListItemComponent implements OnInit {
   movie: Movie | undefined;
   movieList: Movie[] = [];

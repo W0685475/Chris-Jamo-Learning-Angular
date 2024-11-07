@@ -29,10 +29,6 @@ export class MovieListComponent implements OnInit {
       next: (data: Movie[]) => this.movieList = data,
       error: (err: any) => console.error("Error fetching Movies", err),
       complete: () => console.log("Movie data fetch complete!")
-      // this.movieList = this.movieService.getMovies();
-      // next:(data:Movie[]) => this.movieList = data,
-      // error: err => console.error("Error Fetching Movies", err),
-      // complete:() => console.log("Movie Data Fetch Complete!")
     })
   }
 
