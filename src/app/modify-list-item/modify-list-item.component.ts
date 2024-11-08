@@ -3,15 +3,18 @@ import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { ActivatedRoute, Router } from "@angular/router";
 import { MovieService } from "../Services/movie.service";
 import { Movie } from "../Shared/Modules/movie";
+import { CommonModule } from '@angular/common';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-modify-list-item',
   templateUrl: './modify-list-item.component.html',
   standalone: true,
-  styleUrls: ['./modify-list-item.component.css']
+  styleUrls: ['./modify-list-item.component.css'],
+  imports: [CommonModule, ReactiveFormsModule]
 })
 export class ModifyListItemComponent implements OnInit {
-  movieForm: FormGroup;
+  movieForm!: FormGroup;
   error: string | null = null;
 
   constructor(
@@ -19,7 +22,10 @@ export class ModifyListItemComponent implements OnInit {
     private route: ActivatedRoute,
     private movieService: MovieService,
     private router: Router
-  ) {
+  ) {}
+
+  ngOnInit(): void {
+    // Initialize form group in ngOnInit
     this.movieForm = this.fb.group({
       id: ['', Validators.required],
       title: ['', Validators.required],
@@ -29,15 +35,16 @@ export class ModifyListItemComponent implements OnInit {
       rating: ['', [Validators.required, Validators.min(0), Validators.max(10)]],
       image: ['']
     });
-  }
 
-  ngOnInit(): void {
+    // Fetch the movie ID from route and get movie details if ID exists
     const id = Number(this.route.snapshot.paramMap.get('id'));
     if (id) {
       this.movieService.getMovieById(id).subscribe({
         next: (movie) => {
           if (movie) {
             this.movieForm.patchValue(movie);
+          } else {
+            this.error = 'Movie not found';
           }
         },
         error: (err) => {
@@ -52,7 +59,7 @@ export class ModifyListItemComponent implements OnInit {
     if (this.movieForm.valid) {
       const movie: Movie = this.movieForm.value;
 
-      if (movie.id) {
+      if (this.movieForm.get('id')?.value) {
         this.movieService.updateMovie(movie).subscribe({
           next: () => this.router.navigate(['/movies']),
           error: (err) => {
