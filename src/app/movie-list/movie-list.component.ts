@@ -1,52 +1,55 @@
-import {Component, OnInit} from '@angular/core';
-import {Movie} from "../Shared/Modules/movie";
+import { Component, OnInit } from '@angular/core';
+import { Movie } from '../Shared/Modules/movie';
+import { MovieService } from '../Services/movie.service';
+import { Router } from '@angular/router';
 import {MovieListItemComponent} from "../movie-list-item/movie-list-item.component";
-import {NgForOf, NgOptimizedImage, NgStyle} from "@angular/common";
-import {MovieService} from "../Services/movie.service";
-import {movies} from "../../data/movies-mockcontent";
-import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-movie-list',
+  templateUrl: './movie-list.component.html',
   standalone: true,
   imports: [
-    MovieListItemComponent,
-    NgForOf,
-    NgStyle,
+    MovieListItemComponent
   ],
-  templateUrl: './movie-list.component.html',
-  styleUrl: './movie-list.component.css'
+  styleUrls: ['./movie-list.component.css']
 })
 export class MovieListComponent implements OnInit {
-  // Create an array of movies using the Movie interface
+  movieList: Movie[] = [];
+  error: string | null = null;
 
-  movieList : Movie[] = [];
-  constructor(private movieService: MovieService, private router :Router) {
+  constructor(private movieService: MovieService, private router: Router) {}
+
+  ngOnInit(): void {
+    this.getMovies();
   }
 
-  ngOnInit() : void {
+  getMovies(): void {
     this.movieService.getMovies().subscribe({
-      next: (data: Movie[]) => this.movieList = data,
-      error: (err: any) => console.error("Error fetching Movies", err),
-      complete: () => console.log("Movie data fetch complete!")
-    })
-  }
-
-
-
-  delete(id: number): void {
-    this.movieService.deleteMovie(id).subscribe({
-      next: (updatedMovieList: Movie[]) => {
-        this.movieList = updatedMovieList;
-        console.log(`Movie with id ${id} deleted successfully`);
+      next: (data: Movie[]) => {
+        this.movieList = data;
+        this.error = null;  // Clear error if fetch succeeds
       },
-      error: (err: any) => console.error("Error deleting movie", err)
+      error: (err) => {
+        this.error = 'Error fetching movies';
+        console.error("Error fetching movies:", err);
+      },
+      complete: () => console.log("Movie data fetch complete!")
     });
   }
 
-  navigateToMovieList() {
-    this.router.navigate(['modify-movie']);
+  editMovie(id: number): void {
+    this.router.navigate(['/modify-movie', id]);
   }
 
-  protected readonly movies = movies;
+  deleteMovie(id: number): void {
+    this.movieService.deleteMovie(id).subscribe({
+      next: () => {
+        this.getMovies(); // Refresh the list after deletion.
+      },
+      error: (err) => {
+        this.error = 'Error deleting movie';
+        console.error("Error deleting movie:", err);
+      }
+    });
+  }
 }

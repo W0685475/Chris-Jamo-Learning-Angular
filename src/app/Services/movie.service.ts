@@ -1,46 +1,54 @@
 import { Injectable } from '@angular/core';
 import {Movie} from "../Shared/Modules/movie";
-import {Observable, of} from "rxjs";
 import {movies} from "../../data/movies-mockcontent";
+import {catchError, Observable, of, throwError} from "rxjs";
+import {HttpClient, HttpErrorResponse} from "@angular/common/http";
 
 @Injectable({
   providedIn: 'root'
 })
 export class MovieService {
-  private movieList: Movie[] = movies
-
-
-  constructor() {
-  }
-
+  private apiUrl = 'api/movies'; //URL to web api
+  private movies: Movie[] = movies; //Local copy of movie data for CRUD Operations
+  constructor(private http: HttpClient) {} // DI http
+  // CRUD operations using HTTP Requests
+  // All operations we need are:
+  // Get, post, put, delete.
   getMovies(): Observable<Movie[]> {
-    return of(movies);
+    return this.http.get<Movie[]>(this.apiUrl).pipe(catchError(this.handleError));
+  }
+  // private movieList: Movie[] = movies
 
-  }
-  getMovieById(movieId: number):Observable<Movie | undefined> {
-    const movie = this.movieList.find(movie => movie.id === movieId);
-    return of(movie);
-  }
-  addMovie(newMovie:Movie) : Observable<Movie[]>{
-    this.movieList.push(newMovie)
-    return of(this.movieList);
-  }
-  updateMovie(updatedMovie: Movie): Observable<Movie | undefined> {
 
-    const index = this.movieList.findIndex(movie => movie.id=== updatedMovie.id);
-    if (index > -1) {
-      this.movieList[index] = updatedMovie;
-      return of(updatedMovie)
-    }
-    return of(undefined);
+  // constructor() {
+  // }
+  //
+  // getMovies(): Observable<Movie[]> {
+  //   return of(movies);
 
+
+  getMovieById(movieId: number):Observable<Movie> {
+    return this.http.get<Movie>(`${this.apiUrl}/${movieId}`).pipe(catchError(this.handleError));
   }
-  deleteMovie(movieId: number): Observable<Movie[]> {
-    this.movieList = this.movieList.filter(movie => movie.id !== movieId);
-    return of(this.movieList);
+  addMovie(newMovie: Movie) : Observable<Movie>{
+    newMovie.id = this.generateNewId();
+    return this.http.post<Movie>(this.apiUrl, newMovie).pipe(catchError(this.handleError));
+  }
+  updateMovie(updatedMovie: Movie): Observable<Movie> {
+    const url = `${this.apiUrl}/${updatedMovie.id}`;
+    return this.http.post<Movie>(url, updatedMovie).pipe(catchError(this.handleError));
+  }
+  deleteMovie(movieId: number): Observable<{}> {
+    const url = `${this.apiUrl}/${movieId}`;
+    return this.http.delete(url).pipe(catchError(this.handleError));
   }
 
   generateNewId(): number {
-    return this.movieList.length > 0 ? Math.max(...this.movieList.map(movie => movie.id)) + 1 : 1;
+    return this.movies.length >0 ? Math.max(...this.movies.map(movie => movie.id)) + 1 : 1;
+  }
+
+  private handleError(error: HttpErrorResponse){
+    console.error('API error', error);
+    return throwError(()=> new Error ('Server error, please try again'));
   }
 }

@@ -1,25 +1,18 @@
-import {Component, OnInit} from '@angular/core';
-import {FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators} from "@angular/forms";
-import {ActivatedRoute, Router} from "@angular/router";
-import {MovieService} from "../Services/movie.service";
-import {Movie} from "../Shared/Modules/movie";
-import {NgIf} from "@angular/common";
-import {catchError, map, of, switchMap} from "rxjs";
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+import { ActivatedRoute, Router } from "@angular/router";
+import { MovieService } from "../Services/movie.service";
+import { Movie } from "../Shared/Modules/movie";
 
 @Component({
   selector: 'app-modify-list-item',
-  standalone: true,
-  imports: [
-    FormsModule,
-    NgIf,
-    ReactiveFormsModule
-  ],
   templateUrl: './modify-list-item.component.html',
-  styleUrl: './modify-list-item.component.css'
+  standalone: true,
+  styleUrls: ['./modify-list-item.component.css']
 })
 export class ModifyListItemComponent implements OnInit {
   movieForm: FormGroup;
-  movie: Movie | undefined;
+  error: string | null = null;
 
   constructor(
     private fb: FormBuilder,
@@ -28,56 +21,58 @@ export class ModifyListItemComponent implements OnInit {
     private router: Router
   ) {
     this.movieForm = this.fb.group({
-      id: [''],                    // ID is required
-      title: [''],                 // Title is required
-      director: [''],              // Director is required
-      releaseYear: [''],  // Release year is required and within valid range
-      genre: [''],                 // Genre is required
-      rating: [''],  // Rating is required and within 0 to 10
+      id: ['', Validators.required],
+      title: ['', Validators.required],
+      director: ['', Validators.required],
+      releaseYear: ['', [Validators.required, Validators.min(1900), Validators.max(new Date().getFullYear())]],
+      genre: ['', Validators.required],
+      rating: ['', [Validators.required, Validators.min(0), Validators.max(10)]],
       image: ['']
     });
   }
 
   ngOnInit(): void {
-    const id = this.route.snapshot.paramMap.get('id');
+    const id = Number(this.route.snapshot.paramMap.get('id'));
     if (id) {
-      this.movieService.getMovieById(+id).subscribe(movie => {
-        if(movie) {
-          this.movie = movie;
-
-          this.movieForm.patchValue(movie);
+      this.movieService.getMovieById(id).subscribe({
+        next: (movie) => {
+          if (movie) {
+            this.movieForm.patchValue(movie);
+          }
+        },
+        error: (err) => {
+          this.error = 'Error fetching movie';
+          console.error('Error fetching movie:', err);
         }
       });
     }
   }
 
   onSubmit(): void {
-    const movie: Movie = this.movieForm.value;
+    if (this.movieForm.valid) {
+      const movie: Movie = this.movieForm.value;
 
-    // Check if we're updating an existing student
-    if (movie.id) {
-      console.log('Updating movie', movie);
-      this.movieService.updateMovie(movie);
-    } else {
-      // For adding a new student, generate a new ID
-      const newId = this.movieService.generateNewId(); // This method will create a new ID
-      movie.id = newId;
-      movie.image = "Image_not_available.jpg";
-      this.movieService.addMovie(movie);
-    }
-
-    this.router.navigate(['/movies']);
-  }
-
-  onDelete(): void {
-    const id = this.movieForm.get('id')?.value;
-    if (id) {
-      this.movieService.deleteMovie(id);
-      this.router.navigate(['/movies']);
+      if (movie.id) {
+        this.movieService.updateMovie(movie).subscribe({
+          next: () => this.router.navigate(['/movies']),
+          error: (err) => {
+            this.error = 'Error updating movie';
+            console.error('Error updating movie:', err);
+          }
+        });
+      } else {
+        this.movieService.addMovie(movie).subscribe({
+          next: () => this.router.navigate(['/movies']),
+          error: (err) => {
+            this.error = 'Error adding movie';
+            console.error('Error adding movie:', err);
+          }
+        });
+      }
     }
   }
 
   navigateToMovieList(): void {
-    this.router.navigate(['movies']);
+    this.router.navigate(['/movies']);
   }
 }

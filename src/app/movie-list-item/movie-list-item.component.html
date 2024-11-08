@@ -1,7 +1,22 @@
-<div>
-  <h1 style="border: 2px solid black">{{movieListItem?.title}}</h1>
-  <img ngSrc="{{movieListItem?.image}}" alt="Movie Image" width="800" height="600">
-  <!--  <button type="button" (click)="onDelete(movie.id)">Delete</button>-->
-  <!--  <button type="button" (click)="navigateToMovieList()">Back to List</button>-->
-</div>
+<div class="movie-list-item">
+  <!-- Image Display with Fallback Alt Text -->
+  <img [src]="movieListItem?.imageUrl || 'assets/placeholder.png'"
+       alt="Image for movie {{ movieListItem?.title }}" />
 
+  <!-- Movie Information Display -->
+  <div class="movie-info">
+    <div class="movie-id">ID: {{ movieListItem?.id }}</div>
+    <p>Title: {{ movieListItem?.title }}</p>
+    <p>Director: {{ movieListItem?.director }}</p>
+    <p>Release Year: {{ movieListItem?.releaseYear }}</p>
+    <p>Genre: {{ movieListItem?.genre }}</p>
+    <p>Rating: {{ movieListItem?.rating }} / 10</p>
+    <p>Image Available: {{ movieListItem?.imageUrl ? 'Yes' : 'No' }}</p>
+  </div>
+
+  <!-- Button Group for Actions (Edit and Delete) -->
+  <div class="button-group">
+    <button (click)="onEdit()">Edit</button>
+    <button (click)="onDelete()">Delete</button>
+  </div>
+</div>
