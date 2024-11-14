@@ -14,7 +14,7 @@ import {TitleDirectorPipe} from "../pipes/title-director.pipe";
     FormsModule,
     NgIf,
     ReactiveFormsModule,
-    TitleDirectorPipe
+    TitleDirectorPipe,
   ],
   templateUrl: './modify-list-item.component.html',
   styleUrl: './modify-list-item.component.css'

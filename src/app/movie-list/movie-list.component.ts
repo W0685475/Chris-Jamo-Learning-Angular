@@ -10,14 +10,7 @@ import {TitleDirectorPipe} from "../pipes/title-director.pipe";
 @Component({
   selector: 'app-movie-list',
   standalone: true,
-  imports: [
-    MovieListItemComponent,
-    NgForOf,
-    NgStyle,
-    RouterLink,
-    CurrencyPipe,
-    TitleDirectorPipe
-  ],
+  imports: [MovieListItemComponent, NgForOf, NgStyle, RouterLink, CurrencyPipe, TitleDirectorPipe],
   templateUrl: './movie-list.component.html',
   styleUrl: './movie-list.component.css'
 })
