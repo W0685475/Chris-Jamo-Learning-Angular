@@ -5,6 +5,7 @@ import {MovieService} from "../Services/movie.service";
 import {Movie} from "../Shared/Modules/movie";
 import {NgIf} from "@angular/common";
 import {catchError, map, of, switchMap} from "rxjs";
+import {TitleDirectorPipe} from "../pipes/title-director.pipe";
 
 @Component({
   selector: 'app-modify-list-item',
@@ -12,7 +13,8 @@ import {catchError, map, of, switchMap} from "rxjs";
   imports: [
     FormsModule,
     NgIf,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    TitleDirectorPipe
   ],
   templateUrl: './modify-list-item.component.html',
   styleUrl: './modify-list-item.component.css'
