@@ -5,7 +5,7 @@ import {CurrencyPipe, NgForOf, NgOptimizedImage, NgStyle} from "@angular/common"
 import {MovieService} from "../Services/movie.service";
 import {movies} from "../../data/movies-mockcontent";
 import {Router, RouterLink} from "@angular/router";
-import {FullNamePipe} from "../pipes/full-name.pipe";
+import {TitleDirectorPipe} from "../pipes/title-director.pipe";
 
 @Component({
   selector: 'app-movie-list',
@@ -16,7 +16,7 @@ import {FullNamePipe} from "../pipes/full-name.pipe";
     NgStyle,
     RouterLink,
     CurrencyPipe,
-    FullNamePipe
+    TitleDirectorPipe
   ],
   templateUrl: './movie-list.component.html',
   styleUrl: './movie-list.component.css'
