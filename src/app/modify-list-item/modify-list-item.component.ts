@@ -34,6 +34,7 @@ export class ModifyListItemComponent implements OnInit {
       releaseYear: [''],  // Release year is required and within valid range
       genre: [''],                 // Genre is required
       rating: [''],  // Rating is required and within 0 to 10
+      price: [''],
       image: ['']
     });
   }

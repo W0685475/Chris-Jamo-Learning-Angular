@@ -5,6 +5,7 @@ export interface Movie {
   releaseYear: number;
   genre: string;
   rating: number;
+  price: number;
   image?: string;
 }
 

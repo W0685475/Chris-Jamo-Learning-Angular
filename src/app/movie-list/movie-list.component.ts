@@ -1,10 +1,11 @@
 import {Component, OnInit} from '@angular/core';
 import {Movie} from "../Shared/Modules/movie";
 import {MovieListItemComponent} from "../movie-list-item/movie-list-item.component";
-import {NgForOf, NgOptimizedImage, NgStyle} from "@angular/common";
+import {CurrencyPipe, NgForOf, NgOptimizedImage, NgStyle} from "@angular/common";
 import {MovieService} from "../Services/movie.service";
 import {movies} from "../../data/movies-mockcontent";
-import {Router} from "@angular/router";
+import {Router, RouterLink} from "@angular/router";
+import {FullNamePipe} from "../pipes/full-name.pipe";
 
 @Component({
   selector: 'app-movie-list',
@@ -13,6 +14,9 @@ import {Router} from "@angular/router";
     MovieListItemComponent,
     NgForOf,
     NgStyle,
+    RouterLink,
+    CurrencyPipe,
+    FullNamePipe
   ],
   templateUrl: './movie-list.component.html',
   styleUrl: './movie-list.component.css'

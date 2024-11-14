@@ -10,7 +10,8 @@
 
 <!-- Main container for the movie list -->
 <div class="app-container">
-  <h1>{{ title }}</h1>
+  <h1> {{ myDate | date: 'short'}} </h1>
+  <h1>{{ title | uppercase }}</h1>
   <!--put you li tag and get data from the service,
     maybe use an @input decorator in the li, you would likely need to use event binding here as well
     could also use an emitter -->

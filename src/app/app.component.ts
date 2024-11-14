@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {RouterLink, RouterLinkActive, RouterOutlet} from '@angular/router';
-import {JsonPipe, NgForOf} from "@angular/common";
+import {DatePipe, JsonPipe, NgForOf, UpperCasePipe} from "@angular/common";
 import {MovieListComponent} from "./movie-list/movie-list.component";
 import {MovieListItemComponent} from "./movie-list-item/movie-list-item.component";
 import {MovieService} from "./Services/movie.service";
@@ -9,12 +9,13 @@ import {Movie} from "./Shared/Modules/movie";
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, JsonPipe, NgForOf, MovieListComponent, MovieListItemComponent, RouterLink, RouterLinkActive],
+  imports: [RouterOutlet, JsonPipe, NgForOf, MovieListComponent, MovieListItemComponent, RouterLink, RouterLinkActive, UpperCasePipe, DatePipe],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
 export class AppComponent implements OnInit {
 
+  myDate = Date.now();
   movie: Movie | undefined;
   myMovie: Movie | undefined;
 

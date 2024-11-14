@@ -5,11 +5,13 @@ import { MovieListItemComponent} from "./app/movie-list-item/movie-list-item.com
 import {MovieListComponent} from "./app/movie-list/movie-list.component";
 import {ModifyListItemComponent} from "./app/modify-list-item/modify-list-item.component";
 import {PageNotFoundComponent} from "./app/page-not-found/page-not-found.component";
+import {PreloadAllModules} from "@angular/router";
 
 const routes: Routes = [
   {path: '', redirectTo: '/movies', pathMatch: 'full'},
   { path: 'movies', component: MovieListComponent },
-  { path: 'movies/:id', component: MovieListItemComponent },
+  { path: 'movies/:id',
+    loadComponent:()=> import('./app/movie-list/movie-list.component').then(n => n.MovieListComponent )},
   {path:'modify-movie', component: ModifyListItemComponent},
   {path: '**', component:PageNotFoundComponent}
 ];
