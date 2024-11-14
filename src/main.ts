@@ -11,8 +11,9 @@ const routes: Routes = [
   {path: '', redirectTo: '/movies', pathMatch: 'full'},
   { path: 'movies', component: MovieListComponent },
   { path: 'movies/:id',
-    loadComponent:()=> import('./app/movie-list/movie-list.component').then(n => n.MovieListComponent )},
-  {path:'modify-movie', component: ModifyListItemComponent},
+    loadComponent:()=> import('./app/movie-list/movie-list.component').then(m => m.MovieListComponent )},
+  {path:'modify-movie',
+    loadComponent: () => import('./app/modify-list-item/modify-list-item.component').then(m => m.ModifyListItemComponent)},
   {path: '**', component:PageNotFoundComponent}
 ];
 
