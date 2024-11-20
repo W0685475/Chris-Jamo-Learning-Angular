@@ -6,11 +6,12 @@ import {MovieService} from "../Services/movie.service";
 import {movies} from "../../data/movies-mockcontent";
 import {Router, RouterLink} from "@angular/router";
 import {TitleDirectorPipe} from "../pipes/title-director.pipe";
+import {HoverHighLightDirective} from "../directives/hover-high-light.directive";
 
 @Component({
   selector: 'app-movie-list',
   standalone: true,
-  imports: [MovieListItemComponent, NgForOf, NgStyle, RouterLink, CurrencyPipe, TitleDirectorPipe],
+  imports: [MovieListItemComponent, NgForOf, NgStyle, RouterLink, CurrencyPipe, TitleDirectorPipe, HoverHighLightDirective],
   templateUrl: './movie-list.component.html',
   styleUrl: './movie-list.component.css'
 })

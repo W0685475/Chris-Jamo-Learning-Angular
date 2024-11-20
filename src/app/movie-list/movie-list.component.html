@@ -3,7 +3,7 @@
 <!--<app-movie-list-item [movieListItem]="movies[2]"></app-movie-list-item>-->
 <!--<app-movie-list-item [movieListItem]="movies[3]"></app-movie-list-item>-->
 
-<div *ngFor="let movie of movieList">
+<div *ngFor="let movie of movieList" [appHoverHighLight]="'red'">
   <h2>{{movie | titleDirector}} {{movie.releaseYear}}</h2>
 
   <p>{{movie.genre}} - Rating: {{movie.rating}} - Price: {{movie.price | currency: 'CAD'}}</p>
