@@ -7,17 +7,13 @@ import {NgIf} from "@angular/common";
 import {catchError, map, of, switchMap} from "rxjs";
 import {TitleDirectorPipe} from "../pipes/title-director.pipe";
 import {HighLightOnFocusDirective} from "../directives/high-light-on-focus.directive";
+import {HoverHighLightDirective} from "../directives/hover-high-light.directive";
+import {ShowDetailsOnHoverDirective} from "../directives/show-details-on-hover.directive";
 
 @Component({
   selector: 'app-modify-list-item',
   standalone: true,
-  imports: [
-    FormsModule,
-    NgIf,
-    ReactiveFormsModule,
-    TitleDirectorPipe,
-    HighLightOnFocusDirective,
-  ],
+  imports: [FormsModule, NgIf, ReactiveFormsModule, TitleDirectorPipe, HighLightOnFocusDirective, HoverHighLightDirective, ShowDetailsOnHoverDirective],
   templateUrl: './modify-list-item.component.html',
   styleUrl: './modify-list-item.component.css'
 })

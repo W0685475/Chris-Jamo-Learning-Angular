@@ -1,0 +1,43 @@
+/* Odd and Even Rows with Distinct Background Colors */
+div:nth-child(odd) {
+  background-color: rgba(0, 0, 255, 0.8); /* Regular Blue with slight transparency */
+  color: white; /* Ensures readability */
+}
+
+div:nth-child(even) {
+    background-color: rgba(0, 0, 0, 0.8); /* Black with slight transparency */
+    color: white; /* Ensures readability */
+}
+
+/* Edit button style */
+.button-group button:first-child {
+  background-color: #008CBA; /* Vibrant blue */
+  border: 2px solid #005f73; /* Contrasting darker border */
+}
+
+.button-group button:first-child:hover {
+  background-color: #007BA7; /* Slightly darker shade */
+  transform: scale(1.05); /* Add a slight zoom effect */
+}
+
+/* Delete button style */
+.button-group button:last-child {
+  background-color: #ff5722; /* Deep orange */
+  border: 2px solid #bf360c; /* Contrasting darker border */
+}
+
+.button-group button:last-child:hover {
+  background-color: #e64a19; /* Slightly darker orange */
+  transform: scale(1.05); /* Add a slight zoom effect */
+}
+
+/* General Button Styling */
+.button-group button {
+  padding: 10px 20px; /* Larger padding for a more modern look */
+  font-size: 1.1rem; /* Slightly larger font size */
+  border-radius: 8px; /* Rounded corners for a softer look */
+  cursor: pointer;
+  color: #ffffff; /* White text for better readability */
+  transition: background-color 0.2s ease, transform 0.2s ease; /* Smooth transitions */
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2); /* Subtle shadow for depth */
+}
