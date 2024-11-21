@@ -6,6 +6,7 @@ import {Movie} from "../Shared/Modules/movie";
 import {NgIf} from "@angular/common";
 import {catchError, map, of, switchMap} from "rxjs";
 import {TitleDirectorPipe} from "../pipes/title-director.pipe";
+import {HighLightOnFocusDirective} from "../directives/high-light-on-focus.directive";
 
 @Component({
   selector: 'app-modify-list-item',
@@ -15,6 +16,7 @@ import {TitleDirectorPipe} from "../pipes/title-director.pipe";
     NgIf,
     ReactiveFormsModule,
     TitleDirectorPipe,
+    HighLightOnFocusDirective,
   ],
   templateUrl: './modify-list-item.component.html',
   styleUrl: './modify-list-item.component.css'
