@@ -9,17 +9,22 @@ import {TitleDirectorPipe} from "../pipes/title-director.pipe";
 import {HighLightOnFocusDirective} from "../directives/high-light-on-focus.directive";
 import {HoverHighLightDirective} from "../directives/hover-high-light.directive";
 import {ShowDetailsOnHoverDirective} from "../directives/show-details-on-hover.directive";
+import {MatFormField, MatFormFieldModule, MatLabel} from "@angular/material/form-field";
+import {MatInput, MatInputModule} from "@angular/material/input";
+import {MatButton, MatButtonModule} from "@angular/material/button";
+import {MatCheckboxModule} from "@angular/material/checkbox";
 
 @Component({
   selector: 'app-modify-list-item',
   standalone: true,
-  imports: [FormsModule, NgIf, ReactiveFormsModule, TitleDirectorPipe, HighLightOnFocusDirective, HoverHighLightDirective, ShowDetailsOnHoverDirective],
+  imports: [FormsModule, NgIf, ReactiveFormsModule, TitleDirectorPipe, HighLightOnFocusDirective, HoverHighLightDirective, ShowDetailsOnHoverDirective, MatLabel, MatFormField, MatFormFieldModule, MatInput, MatInputModule, MatCheckboxModule, MatButton, MatButtonModule],
   templateUrl: './modify-list-item.component.html',
   styleUrl: './modify-list-item.component.css'
 })
 export class ModifyListItemComponent implements OnInit {
   movieForm: FormGroup;
   movie: Movie | undefined;
+  error: string | null = null;
 
   constructor(
     private fb: FormBuilder,

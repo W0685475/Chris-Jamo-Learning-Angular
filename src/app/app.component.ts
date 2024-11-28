@@ -5,11 +5,13 @@ import {MovieListComponent} from "./movie-list/movie-list.component";
 import {MovieListItemComponent} from "./movie-list-item/movie-list-item.component";
 import {MovieService} from "./Services/movie.service";
 import {Movie} from "./Shared/Modules/movie";
+import {MatToolbar} from "@angular/material/toolbar";
+import {MatButton} from "@angular/material/button";
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, JsonPipe, NgForOf, MovieListComponent, MovieListItemComponent, RouterLink, RouterLinkActive, UpperCasePipe, DatePipe],
+  imports: [RouterOutlet, JsonPipe, NgForOf, MovieListComponent, MovieListItemComponent, RouterLink, RouterLinkActive, UpperCasePipe, DatePipe, MatToolbar, MatButton],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })

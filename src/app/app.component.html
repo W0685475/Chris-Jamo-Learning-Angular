@@ -18,6 +18,12 @@
     <!-- Displaying content from ContentService -->
 
   <!--router outlet to display routed components -->
+  <mat-toolbar>
+    <span>Movies</span>
+    <button mat-button RouterLink="/movies" routerLinkActive="active">Movie List</button>
+  </mat-toolbar>
+
+  <h2>{{title}}</h2>
   <router-outlet></router-outlet>
   </div>
 </body>

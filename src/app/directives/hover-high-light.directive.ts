@@ -1,11 +1,12 @@
 import {Directive, ElementRef, HostListener, Input} from '@angular/core';
+import {FormGroup} from "@angular/forms";
 
 @Directive({
   selector: '[appHoverHighLight]',
   standalone: true
 })
 export class HoverHighLightDirective {
-  @Input() appHoverHighLight= '';
+  @Input() appHoverHighLight: string = '';
 
   constructor(private el: ElementRef) { }
 

@@ -1,22 +1,69 @@
-<!--<app-movie-list-item [movieListItem]="movies[0]"></app-movie-list-item>-->
-<!--<app-movie-list-item [movieListItem]="movies[1]"></app-movie-list-item>-->
-<!--<app-movie-list-item [movieListItem]="movies[2]"></app-movie-list-item>-->
-<!--<app-movie-list-item [movieListItem]="movies[3]"></app-movie-list-item>-->
+<div class="mat-container">
+  <h2>Movie List</h2>
 
-<div *ngFor="let movie of movieList" [appHoverHighLight]="'red'">
-  <h2>{{movie | titleDirector}} {{movie.releaseYear}}</h2>
+  <!-- Material Table -->
+  <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
 
-  <p>{{movie.genre}} - Rating: {{movie.rating}} - Price: {{movie.price | currency: 'CAD'}}</p>
-  <img [src]="movie.image" alt="{{movie.title}} image" width="100" height="150">
+    <!-- ID Column -->
+    <ng-container matColumnDef="id">
+      <th mat-header-cell *matHeaderCellDef>ID</th>
+      <td mat-cell *matCellDef="let movie">{{ movie.id }}</td>
+    </ng-container>
 
-  <button (click)="delete(movie.id)">Delete</button>
-  <button (click)="navigateToMovieList()">Edit Movie</button>
+    <!-- Title and Director Column -->
+    <ng-container matColumnDef="titleDirector">
+      <th mat-header-cell *matHeaderCellDef>Title & Director</th>
+      <td mat-cell *matCellDef="let movie">{{ movie | titleDirector }}</td>
+    </ng-container>
+
+    <!-- Genre Column -->
+    <ng-container matColumnDef="genre">
+      <th mat-header-cell *matHeaderCellDef>Genre</th>
+      <td mat-cell *matCellDef="let movie">{{ movie.genre }}</td>
+    </ng-container>
+
+    <!-- Rating Column -->
+    <ng-container matColumnDef="rating">
+      <th mat-header-cell *matHeaderCellDef>Rating</th>
+      <td mat-cell *matCellDef="let movie">{{ movie.rating }}</td>
+    </ng-container>
+
+    <!-- Price Column -->
+    <ng-container matColumnDef="price">
+      <th mat-header-cell *matHeaderCellDef>Price</th>
+      <td mat-cell *matCellDef="let movie">{{ movie.price | currency: 'CAD' }}</td>
+    </ng-container>
+
+    <!-- Image Column -->
+    <ng-container matColumnDef="image">
+      <th mat-header-cell *matHeaderCellDef>Image</th>
+      <td mat-cell *matCellDef="let movie">
+        <img [src]="movie.image" alt="{{movie.title}} image" width="100" height="150">
+      </td>
+    </ng-container>
+
+    <!-- Delete and Edit Buttons Column -->
+    <ng-container matColumnDef="actions">
+      <th mat-header-cell *matHeaderCellDef>Actions</th>
+      <td mat-cell *matCellDef="let movie">
+        <button (click)="delete(movie.id)">Delete</button>
+        <button (click)="navigateToMovieList()">Edit Movie</button>
+      </td>
+    </ng-container>
+
+    <!-- Table Rows -->
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr
+      mat-row
+      *matRowDef="let movie; columns: displayedColumns"
+      [routerLink]="['/movies', movie.id]"
+      [appHoverHighLight]="'red'"
+    ></tr>
+  </table>
+
+  <!-- Pagination -->
+  <mat-paginator [pageSize]="10" [pageSizeOptions]="[5, 10, 25, 100]" showFirstLastButtons></mat-paginator>
+
+<!--  &lt;!&ndash; Error Message &ndash;&gt;-->
+<!--  <div *ngIf="error" class="error mat-error">{{ error }}</div>-->
 </div>
-
-<!--  <p>Id: {{movie.id}}</p>-->
-<!--  <p>Title: {{movie.title}}</p>-->
-<!--  <p>Rating: {{movie.director}}</p>-->
-
-<!--{{movie.title}}-->
-<!--{{movie.director}} - -->
-

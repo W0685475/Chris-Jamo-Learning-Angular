@@ -7,6 +7,9 @@ import {ModifyListItemComponent} from "./app/modify-list-item/modify-list-item.c
 import {PageNotFoundComponent} from "./app/page-not-found/page-not-found.component";
 import {PreloadAllModules} from "@angular/router";
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
+import {MatTableModule} from "@angular/material/table";
+import {MatButtonModule} from "@angular/material/button";
+import {MatIconModule} from "@angular/material/icon";
 
 const routes: Routes = [
   {path: '', redirectTo: '/movies', pathMatch: 'full'},
@@ -19,6 +22,6 @@ const routes: Routes = [
 ];
 
 bootstrapApplication(AppComponent, {
-  providers: [provideRouter(routes), provideAnimationsAsync()]
+  providers: [provideRouter(routes), provideAnimationsAsync(), MatTableModule, MatButtonModule, MatIconModule]
 }).then(r => console.log('Bootstrap successful'));
 

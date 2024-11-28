@@ -54,10 +54,45 @@
 <!--  </div>-->
 <!--</div>-->
 
-<div>
-  <h1 style="border: 2px solid black">{{movieListItem?.title}}</h1>
-  <img ngSrc="{{movieListItem?.image}}" alt="Movie Image" width="800" height="600">
-  <!--  <button type="button" (click)="onDelete(movie.id)">Delete</button>-->
-  <!--  <button type="button" (click)="navigateToMovieList()">Back to List</button>-->
+<!--<div> *******This was my original code before I added Angular Material******-->
+<!--  <h1 style="border: 2px solid black">{{movieListItem?.title}}</h1>-->
+<!--  <img ngSrc="{{movieListItem?.image}}" alt="Movie Image" width="800" height="600">-->
+<!--  &lt;!&ndash;  <button type="button" (click)="onDelete(movie.id)">Delete</button>&ndash;&gt;-->
+<!--  &lt;!&ndash;  <button type="button" (click)="navigateToMovieList()">Back to List</button>&ndash;&gt;-->
+<!--</div>-->
+
+<div *ngIf="movieListItem" class="movie-detail">
+  <!-- Movie Details Card -->
+  <mat-card class="movie-card">
+    <mat-card-header>
+      <mat-card-title>{{ movieListItem.title }}</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <p><strong>Genre:</strong> {{ movieListItem.genre }}</p>
+      <p><strong>Rating:</strong> {{ movieListItem.rating }}</p>
+      <p><strong>Price:</strong> {{ movieListItem.price | currency: 'CAD': 'symbol-narrow' }}</p>
+
+      <!-- Movie Image -->
+      <img [src]="movieListItem.image" alt="{{ movieListItem.title }} Image" width="800" height="600">
+    </mat-card-content>
+  </mat-card>
+
+  <!-- Navigation Buttons -->
+  <div class="navigation-buttons">
+    <button mat-raised-button color="primary" (click)="goBackward()" [disabled]="currentIndex === 0">
+      <mat-icon fontIcon="home">arrow_back</mat-icon> Previous
+    </button>
+    <button mat-raised-button color="primary" (click)="goForward()" [disabled]="currentIndex === movieList.length - 1">
+      Next <mat-icon fontIcon="home">arrow_forward</mat-icon>
+    </button>
+    <button mat-raised-button color="accent" (click)="goBack()">
+      Back to Movie List
+    </button>
+  </div>
 </div>
+
+<!--&lt;!&ndash; Error Display &ndash;&gt;-->
+<!--<div *ngIf="error" mat-card class="error-card">-->
+<!--  <mat-card-content>{{ error }}</mat-card-content>-->
+<!--</div>-->
 

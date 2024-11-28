@@ -1,11 +1,25 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {NgOptimizedImage, NgStyle} from "@angular/common";
+import {CurrencyPipe, NgIf, NgOptimizedImage, NgStyle} from "@angular/common";
 import {Movie} from "../Shared/Modules/movie";
 import {MovieListComponent} from "../movie-list/movie-list.component";
 import {NgForOf} from "@angular/common";
 import {MovieService} from "../Services/movie.service";
 import {movies} from "../../data/movies-mockcontent";
 import {ActivatedRoute, Router} from "@angular/router";
+import {MatCard, MatCardContent, MatCardHeader, MatCardModule} from "@angular/material/card";
+import {
+  MatCell,
+  MatCellDef,
+  MatColumnDef,
+  MatHeaderCell, MatHeaderCellDef,
+  MatHeaderRow,
+  MatHeaderRowDef, MatRow, MatRowDef,
+  MatTable
+} from "@angular/material/table";
+import {MatButton} from "@angular/material/button";
+import {MatIcon, MatIconModule} from "@angular/material/icon";
+import {HoverHighLightDirective} from "../directives/hover-high-light.directive";
+// import {error} from "@angular/compiler-cli/src/transformers/util";
 
 @Component({
   selector: 'app-movie-list-item',
@@ -14,9 +28,7 @@ import {ActivatedRoute, Router} from "@angular/router";
   //   NgOptimizedImage
   // ], // Add NgStyle here
   templateUrl: './movie-list-item.component.html',
-  imports: [
-    NgOptimizedImage
-  ],
+  imports: [NgOptimizedImage, NgIf, CurrencyPipe, HoverHighLightDirective, MatCard, MatCardHeader, MatCardContent, MatTable, MatColumnDef, MatHeaderCell, MatHeaderCellDef, MatCellDef, MatCell, MatHeaderRow, MatHeaderRowDef, MatRowDef, MatRow, MatButton, MatCardModule, MatIcon],
   styleUrl: './movie-list-item.component.css'
 })
 
@@ -77,8 +89,6 @@ export class MovieListItemComponent implements OnInit {
       this.router.navigate(['/movies', this.movieList[this.currentIndex].id]);
     }
   }
-
-
 }
 
 
