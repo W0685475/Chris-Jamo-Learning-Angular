@@ -1,4 +1,5 @@
 import {Directive, ElementRef, HostListener, Input, Renderer2} from '@angular/core';
+import {appConfig} from "../app.config";
 
 @Directive({
   selector: '[appHighLightOnFocus]',
